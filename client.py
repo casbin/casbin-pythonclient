@@ -17,7 +17,7 @@ import urllib2
 
 
 def request_enforcement(tenant, sub, obj, act, service):
-    url = 'http://localhost:8080/decision'
+    url = 'http://localhost:9999/decision'
 
     values = {"Tenant": tenant, "Sub": sub, "Obj": obj, "Act": act, "Service": service}
     params = str(values)
