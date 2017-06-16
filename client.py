@@ -35,5 +35,11 @@ def request_enforcement(tenant, sub, obj, act, service):
 
 
 if __name__ == "__main__":
-    res = request_enforcement("tenant1", "admin", "res1", "GET", "nova")
+    project_id = u'ce9ff56f5af746de93ec30f387cd7fa8'
+    user_name = u'admin'
+    req_path_info = u'/ce9ff56f5af746de93ec30f387cd7fa8/servers/detail'
+    req_method = 'GET'
+    req_service = 'nova'
+
+    res = request_enforcement(project_id.encode(), user_name.encode(), req_path_info.encode(), req_method, req_service)
     print res
