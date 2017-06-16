@@ -12,18 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import urllib2
 
 
-def request_enforcement(tenant, sub, obj, act):
+def request_enforcement(tenant, sub, obj, act, service):
     url = 'http://localhost:8080/decision'
-    values = {"Tenant": tenant, "Sub": sub, "Obj": obj, "Act": act}
+
+    values = {"Tenant": tenant, "Sub": sub, "Obj": obj, "Act": act, "Service": service}
     params = str(values)
     params = params.replace("'", '"')
-    headers = {"Content-type":"application/json","Accept": "application/json"}
+
+    headers = {"Content-type": "application/json", "Accept": "application/json"}
+
     req = urllib2.Request(url, params, headers)
     response = urllib2.urlopen(req)
-    print response.read()
+    res = json.loads(response.read())
+    if res['decision'] == 'true':
+        return True
+    else:
+        return False
+
 
 if __name__ == "__main__":
-    request_enforcement("tenant1", "admin", "res1", "GET")
+    res = request_enforcement("tenant1", "admin", "res1", "GET", "nova")
+    print res
